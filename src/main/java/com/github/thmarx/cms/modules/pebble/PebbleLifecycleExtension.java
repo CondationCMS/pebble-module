@@ -26,6 +26,7 @@ import com.github.thmarx.cms.api.feature.features.DBFeature;
 import com.github.thmarx.cms.api.feature.features.ServerPropertiesFeature;
 import com.github.thmarx.cms.api.feature.features.ThemeFeature;
 import com.github.thmarx.cms.api.module.CMSModuleContext;
+import com.github.thmarx.cms.api.module.CMSRequestContext;
 import com.github.thmarx.modules.api.ModuleLifeCycleExtension;
 import com.github.thmarx.modules.api.annotation.Extension;
 
@@ -34,7 +35,7 @@ import com.github.thmarx.modules.api.annotation.Extension;
  * @author t.marx
  */
 @Extension(ModuleLifeCycleExtension.class)
-public class PebbleLifecycleExtension extends ModuleLifeCycleExtension<CMSModuleContext> {
+public class PebbleLifecycleExtension extends ModuleLifeCycleExtension<CMSModuleContext, CMSRequestContext> {
 
 	static PebbleTemplateEngine templateEngine;
 	
