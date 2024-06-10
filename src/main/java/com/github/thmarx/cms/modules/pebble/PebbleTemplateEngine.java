@@ -23,7 +23,6 @@ package com.github.thmarx.cms.modules.pebble;
  */
 
 import com.github.benmanes.caffeine.cache.Caffeine;
-import com.github.thmarx.cms.api.ModuleFileSystem;
 import com.github.thmarx.cms.api.ServerProperties;
 import com.github.thmarx.cms.api.db.DB;
 import com.github.thmarx.cms.api.db.DBFileSystem;
@@ -50,38 +49,19 @@ import java.util.List;
  */
 public class PebbleTemplateEngine implements TemplateEngine {
 
-	private final PebbleEngine engine;
+	private PebbleEngine engine;
 	
+	final DB db;
+	final ServerProperties properties;
 	
 	public PebbleTemplateEngine(final DB db, final ServerProperties properties, final Theme theme) {
 		
-		final PebbleEngine.Builder builder = new PebbleEngine.Builder()
-				.loader(createLoader(db.getFileSystem(), theme));
-		
-		if (properties.dev()) {
-			builder.templateCache(null);
-			builder.tagCache(null);
-			builder.cacheActive(false);
-			builder.strictVariables(true);
-		} else {
-			var templateCache = new CaffeineTemplateCache(
-					Caffeine.newBuilder()
-							.expireAfterWrite(Duration.ofMinutes(1))
-							.build()
-			);
-			builder.templateCache(templateCache);
-			var tagCache = new CaffeineTagCache(
-					Caffeine.newBuilder()
-							.expireAfterWrite(Duration.ofMinutes(1))
-							.build()
-			);
-			builder.tagCache(tagCache);
-			builder.cacheActive(true);
-		}
-		
-		engine = builder
-				.build();
+		this.db = db;
+		this.properties = properties;
+		buildEngine(theme);
 	}
+	
+	
 	
 	private Loader<?> createLoader (final DBFileSystem fileSystem, final Theme theme) {
 		List<Loader<?>> loaders = new ArrayList<>();
@@ -115,6 +95,40 @@ public class PebbleTemplateEngine implements TemplateEngine {
 	@Override
 	public void invalidateCache() {
 		engine.getTemplateCache().invalidateAll();
+	}
+
+	@Override
+	public void updateTheme(Theme theme) {
+		buildEngine(theme);
+	}
+
+	private void buildEngine(Theme theme) {
+		final PebbleEngine.Builder builder = new PebbleEngine.Builder()
+				.loader(createLoader(db.getFileSystem(), theme));
+		
+		if (properties.dev()) {
+			builder.templateCache(null);
+			builder.tagCache(null);
+			builder.cacheActive(false);
+			builder.strictVariables(true);
+		} else {
+			var templateCache = new CaffeineTemplateCache(
+					Caffeine.newBuilder()
+							.expireAfterWrite(Duration.ofMinutes(1))
+							.build()
+			);
+			builder.templateCache(templateCache);
+			var tagCache = new CaffeineTagCache(
+					Caffeine.newBuilder()
+							.expireAfterWrite(Duration.ofMinutes(1))
+							.build()
+			);
+			builder.tagCache(tagCache);
+			builder.cacheActive(true);
+		}
+		
+		engine = builder
+				.build();
 	}
 
 }
