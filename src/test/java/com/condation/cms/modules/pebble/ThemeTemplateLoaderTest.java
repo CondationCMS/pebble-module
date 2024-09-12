@@ -1,4 +1,4 @@
-package com.github.thmarx.cms.modules.pebble;
+package com.condation.cms.modules.pebble;
 
 /*-
  * #%L
