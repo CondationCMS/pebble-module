@@ -28,13 +28,13 @@
 	</licenses>
 	<dependencies>
 		<dependency>
-			<groupId>com.github.thmarx.cms</groupId>
+			<groupId>com.condation.cms</groupId>
 			<artifactId>cms-api</artifactId>
 			<version>${cms.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.github.thmarx.cms.module.framework</groupId>
+			<groupId>com.condation.cms.module.framework</groupId>
 			<artifactId>modules-api</artifactId>
 			<version>${cms.version}</version>
 			<scope>provided</scope>

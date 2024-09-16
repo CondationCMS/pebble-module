@@ -22,13 +22,13 @@ package com.condation.cms.modules.pebble;
  * #L%
  */
 
-import com.github.thmarx.cms.api.feature.features.DBFeature;
-import com.github.thmarx.cms.api.feature.features.ServerPropertiesFeature;
-import com.github.thmarx.cms.api.feature.features.ThemeFeature;
-import com.github.thmarx.cms.api.module.CMSModuleContext;
-import com.github.thmarx.cms.api.module.CMSRequestContext;
-import com.github.thmarx.modules.api.ModuleLifeCycleExtension;
-import com.github.thmarx.modules.api.annotation.Extension;
+import com.condation.cms.api.feature.features.DBFeature;
+import com.condation.cms.api.feature.features.ServerPropertiesFeature;
+import com.condation.cms.api.feature.features.ThemeFeature;
+import com.condation.cms.api.module.CMSModuleContext;
+import com.condation.cms.api.module.CMSRequestContext;
+import com.condation.modules.api.ModuleLifeCycleExtension;
+import com.condation.modules.api.annotation.Extension;
 
 /**
  *

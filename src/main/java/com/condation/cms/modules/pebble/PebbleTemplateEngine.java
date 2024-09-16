@@ -23,11 +23,11 @@ package com.condation.cms.modules.pebble;
  */
 
 import com.github.benmanes.caffeine.cache.Caffeine;
-import com.github.thmarx.cms.api.ServerProperties;
-import com.github.thmarx.cms.api.db.DB;
-import com.github.thmarx.cms.api.db.DBFileSystem;
-import com.github.thmarx.cms.api.template.TemplateEngine;
-import com.github.thmarx.cms.api.theme.Theme;
+import com.condation.cms.api.ServerProperties;
+import com.condation.cms.api.db.DB;
+import com.condation.cms.api.db.DBFileSystem;
+import com.condation.cms.api.template.TemplateEngine;
+import com.condation.cms.api.theme.Theme;
 import io.pebbletemplates.pebble.PebbleEngine;
 import io.pebbletemplates.pebble.cache.tag.CaffeineTagCache;
 import io.pebbletemplates.pebble.cache.template.CaffeineTemplateCache;
