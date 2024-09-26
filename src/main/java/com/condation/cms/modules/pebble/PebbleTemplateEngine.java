@@ -34,6 +34,7 @@ import io.pebbletemplates.pebble.cache.template.CaffeineTemplateCache;
 import io.pebbletemplates.pebble.loader.DelegatingLoader;
 import io.pebbletemplates.pebble.loader.FileLoader;
 import io.pebbletemplates.pebble.loader.Loader;
+import io.pebbletemplates.pebble.loader.StringLoader;
 import io.pebbletemplates.pebble.template.PebbleTemplate;
 import java.io.File;
 import java.io.IOException;
@@ -49,7 +50,8 @@ import java.util.List;
  */
 public class PebbleTemplateEngine implements TemplateEngine {
 
-	private PebbleEngine engine;
+	private PebbleEngine fileTemplateEngine;
+	private PebbleEngine stringTemplateEngine;
 	
 	final DB db;
 	final ServerProperties properties;
@@ -81,20 +83,25 @@ public class PebbleTemplateEngine implements TemplateEngine {
 
 	@Override
 	public String render(String template, Model model) throws IOException {
-
 		Writer writer = new StringWriter();
-
-		PebbleTemplate compiledTemplate = engine.getTemplate(template);
-
+		PebbleTemplate compiledTemplate = fileTemplateEngine.getTemplate(template);
 		compiledTemplate.evaluate(writer, model.values);
-
 		return writer.toString();
-
 	}
 
 	@Override
+	public String renderFromString(String templateString, Model model) throws IOException {
+		Writer writer = new StringWriter();
+		PebbleTemplate compiledTemplate = stringTemplateEngine.getTemplate(templateString);
+		compiledTemplate.evaluate(writer, model.values);
+		return writer.toString();
+	}
+	
+	
+
+	@Override
 	public void invalidateCache() {
-		engine.getTemplateCache().invalidateAll();
+		fileTemplateEngine.getTemplateCache().invalidateAll();
 	}
 
 	@Override
@@ -127,8 +134,10 @@ public class PebbleTemplateEngine implements TemplateEngine {
 			builder.cacheActive(true);
 		}
 		
-		engine = builder
+		fileTemplateEngine = builder
 				.build();
+		
+		stringTemplateEngine = builder.loader(new StringLoader()).build();
 	}
 
 }
