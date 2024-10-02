@@ -76,6 +76,12 @@ public class PebbleTemplateEngine implements TemplateEngine {
 			var themeLoader = new FileLoader();
 			themeLoader.setPrefix(theme.templatesPath().toString() + File.separatorChar);
 			loaders.add(themeLoader);
+			
+			if (theme.getParentTheme() != null) {
+				var parentLoader = new FileLoader();
+				parentLoader.setPrefix(theme.getParentTheme().templatesPath().toString() + File.separatorChar);
+				loaders.add(parentLoader);
+			}
 		}
 		
 		return new DelegatingLoader(loaders);

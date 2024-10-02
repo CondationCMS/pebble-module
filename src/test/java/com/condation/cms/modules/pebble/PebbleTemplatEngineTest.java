@@ -51,12 +51,15 @@ public class PebbleTemplatEngineTest {
 		var db = Mockito.mock(DB.class);
 		var fileSystem = Mockito.mock(DBFileSystem.class);
 		var theme = Mockito.mock(Theme.class);
+		var parentTheme = Mockito.mock(Theme.class);
 		var serverProperties = Mockito.mock(ServerProperties.class);
 		
 //		Mockito.when(serverProperties.dev()).thenReturn(Boolean.FALSE);
 		Mockito.when(db.getFileSystem()).thenReturn(fileSystem);
 		Mockito.when(fileSystem.resolve("templates/")).thenReturn(Path.of("src/test/resources/site"));
 		Mockito.when(theme.templatesPath()).thenReturn(Path.of("src/test/resources/theme"));
+		Mockito.when(theme.getParentTheme()).thenReturn(parentTheme);
+		Mockito.when(parentTheme.templatesPath()).thenReturn(Path.of("src/test/resources/theme2"));
 		
 		templateEngine = new PebbleTemplateEngine(db, serverProperties, theme);
 	}
@@ -72,6 +75,12 @@ public class PebbleTemplatEngineTest {
 	public void load_template_from_theme() throws IOException {
 		String result = templateEngine.render("only-theme.vm", new TemplateEngine.Model(null, null));		
 		Assertions.assertThat(result).isEqualTo("theme");
+	}
+	
+	@Test
+	public void load_template_from_parent_theme() throws IOException {
+		String result = templateEngine.render("parent.vm", new TemplateEngine.Model(null, null));
+		Assertions.assertThat(result).isEqualTo("from parent theme");
 	}
 	
 	@Test
