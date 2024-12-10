@@ -22,7 +22,7 @@ package com.condation.cms.modules.pebble;
  * #L%
  */
 
-import com.condation.cms.api.extensions.TemplateEngineProviderExtentionPoint;
+import com.condation.cms.api.extensions.TemplateEngineProviderExtensionPoint;
 import com.condation.cms.api.template.TemplateEngine;
 import com.condation.modules.api.annotation.Extension;
 
@@ -30,8 +30,8 @@ import com.condation.modules.api.annotation.Extension;
  *
  * @author t.marx
  */
-@Extension(TemplateEngineProviderExtentionPoint.class)
-public class PebbleTemplateEngineProviderExtentionPoint extends TemplateEngineProviderExtentionPoint {
+@Extension(TemplateEngineProviderExtensionPoint.class)
+public class PebbleTemplateEngineProviderExtensionPoint extends TemplateEngineProviderExtensionPoint {
 
 	@Override
 	public void init() {
